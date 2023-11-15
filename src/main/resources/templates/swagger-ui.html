@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swagger UI</title>
+</head>
+<body>
+    <div id="swagger-ui"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.52.0/swagger-ui-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.52.0/swagger-ui-standalone-preset.js"></script>
+
+    <script th:inline="javascript">
+        window.onload = function() {
+            const swaggerUrl = /*[[${swaggerUrl}]]*/ "/v2/api-docs";
+            const ui = SwaggerUIBundle({
+                url: swaggerUrl,
+                dom_id: "#swagger-ui",
+                presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+                layout: "BaseLayout",
+            });
+
+            // Function to update Swagger UI URL on every API execution
+            function updateSwaggerUrl() {
+                ui.specActions.updateUrl(swaggerUrl);
+                ui.load();
+            }
+
+            // Add event listener for API execution (adjust as needed)
+            document.addEventListener('click', updateSwaggerUrl);
+
+            // Optionally, you can handle other events or specific API executions
+            // document.addEventListener('your-custom-event', updateSwaggerUrl);
+        };
+    </script>
+</body>
+</html>
